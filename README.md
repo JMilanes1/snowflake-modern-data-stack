@@ -59,4 +59,4 @@ Every push to main triggers GitHub Actions to:
 
 Built as a portfolio project to demonstrate modern data engineering practices
 including version-controlled transformations, automated deployments, and 
-environment promotion strategies.
+environment promotion strategies.# verified clean repo
