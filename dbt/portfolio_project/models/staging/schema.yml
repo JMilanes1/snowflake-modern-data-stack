@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_gdp
+    columns:
+      - name: gdp_date
+        tests:
+          - not_null
+          - unique
+      - name: gdp_value
+        tests:
+          - not_null
+
+  - name: stg_unemployment
+    columns:
+      - name: unemployment_date
+        tests:
+          - not_null
+          - unique
+      - name: unemployment_rate
+        tests:
+          - not_null
+
+  - name: stg_inflation
+    columns:
+      - name: inflation_date
+        tests:
+          - not_null
+          - unique
+      - name: cpi_value
+        tests:
+          - not_null

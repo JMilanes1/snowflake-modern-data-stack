@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: raw
+    database: DEV
+    schema: RAW
+    tables:
+      - name: gdp
+      - name: unemployment
+      - name: inflation

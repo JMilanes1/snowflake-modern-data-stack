@@ -1,0 +1,56 @@
+name: dbt Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dbt-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dbt
+        run: pip install dbt-snowflake
+
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << 'PROFILE'
+          portfolio_project:
+            outputs:
+              dev:
+                type: snowflake
+                account: NGCPQFA-XCC30653
+                user: jmilanes1
+                password: ${{ secrets.SNOWFLAKE_PASSWORD }}
+                role: DEV_ROLE
+                database: DEV
+                warehouse: PERSONAL_WH
+                schema: dbt_dev
+                threads: 4
+            target: dev
+          PROFILE
+
+      - name: dbt debug
+        working-directory: dbt/portfolio_project
+        run: dbt debug
+
+      - name: dbt run
+        working-directory: dbt/portfolio_project
+        run: dbt run
+
+      - name: dbt test
+        working-directory: dbt/portfolio_project
+        run: dbt test
